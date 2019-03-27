@@ -93,7 +93,12 @@ app.use(cors());
 app.get('/', (req, res) => {
 	res.send(`${co.APP_NAME} is up chạy ngon rồi`);
 });
-
+app.get('/webhook', function(req, res) {
+	if (req.query['hub.verify_token'] === 'kien1997') {
+		res.send(req.query['hub.challenge']);
+	}
+	res.send('Error, wrong validation token');
+});
 // process messaging event
 app.post('/webhook/', (req, res) => {
 	let messaging_events = req.body.entry[0].messaging;
